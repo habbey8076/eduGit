@@ -1,0 +1,45 @@
+1. Backup and Compression Work
+
+root@edusever:/home/vagrant# rsync -avz --delete __pycache__/ dirWork/
+sending incremental file list
+
+sent 287 bytes  received 13 bytes  600.00 bytes/sec
+total size is 667  speedup is 2.22
+root@edusever:/home/vagrant# cd dirWork
+root@edusever:/home/vagrant/dirWork# ls -l
+total 12
+-rw-r--r-- 1 root root    0 Feb 13 15:29 __init__.py
+-rw-r--r-- 1 root root   20 Feb 13 15:32 myattrs.py
+-rw-r--r-- 1 root root   59 Feb 13 15:31 myfunc.py
+drwxr-xr-x 2 root root 4096 Feb 13 15:35 __pycache__
+root@edusever:/home/vagrant/dirWork#
+
+----------------
+
+CronJob
+root@edusever:/home/vagrant# crontab -e
+
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+ 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+
+ 0 5 * * * -rsync -av  --delete mypackage/ __pycache__/
+
+ 0 5 * * * -rsync -av  --delete  __pycache__/ dirWork/
+
+Control X to save the job and exit the editor
